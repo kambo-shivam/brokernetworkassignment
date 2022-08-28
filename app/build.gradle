@@ -1,0 +1,144 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    compileSdkVersion 33
+    buildToolsVersion "31.0.0"
+
+    defaultConfig {
+        applicationId "com.app.bn"
+        minSdkVersion 28
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    /**
+     * flavors setup
+     * */
+    productFlavors {
+        dev {
+            applicationIdSuffix ".dev"
+            buildConfigField "boolean", "CRASH_REPORTING", "false"
+            buildConfigField "String", "BASE_URL", "\"https://run.mocky.io/\"" // specify base api url
+        }
+
+        qa {
+            applicationIdSuffix ".qa"
+            buildConfigField "boolean", "CRASH_REPORTING", "true"
+            buildConfigField "String", "BASE_URL", "\"https://run.mocky.io/\"" // specify base api url
+        }
+
+        prod {
+            applicationIdSuffix ".app"
+            buildConfigField "boolean", "CRASH_REPORTING", "true"
+            buildConfigField "String", "BASE_URL", "\"https://run.mocky.io/\"" // specify base api url
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+        incremental true
+    }
+
+    flavorDimensions "default"
+}
+
+dependencies {
+
+    //google material
+    implementation "com.google.android.material:material:${rootProject.ext.material}"
+
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.ext.kotlin_stdlib}"
+
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${rootProject.ext.coroutines}"
+
+    //Dagger - Hilt
+    implementation "com.google.dagger:hilt-android:${rootProject.ext.hilt}"
+    kapt "com.google.dagger:hilt-android-compiler:${rootProject.ext.hilt_kapt}"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:${rootProject.ext.hilt_viewmodel}"
+    kapt "androidx.hilt:hilt-compiler:${rootProject.ext.hilt_compiler}"
+
+    //core
+    implementation "androidx.core:core-ktx:${rootProject.ext.core}"
+    implementation "androidx.appcompat:appcompat:${rootProject.ext.appcompat}"
+    implementation "androidx.constraintlayout:constraintlayout:${rootProject.ext.constraint_layout}"
+    implementation "androidx.navigation:navigation-fragment-ktx:${rootProject.ext.navigation}"
+
+    //recycler view
+    implementation "androidx.recyclerview:recyclerview:${rootProject.ext.recycler_view}"
+
+    //preference support for Android Q
+    implementation "androidx.preference:preference-ktx:${rootProject.ext.preference}"
+
+    //LifeCycle
+    implementation "androidx.lifecycle:lifecycle-common:${rootProject.ext.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:${rootProject.ext.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${rootProject.ext.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.lifecycle_ext}"
+    implementation "android.arch.lifecycle:common-java8:${rootProject.ext.lifecycle_common}"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    //Test
+    testImplementation "junit:junit:${rootProject.ext.junit}"
+    androidTestImplementation "androidx.test.ext:junit:${rootProject.ext.junit_ext}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${rootProject.ext.expresso}"
+
+    //glide
+    implementation "com.github.bumptech.glide:glide:${rootProject.ext.glide}"
+    implementation "jp.wasabeef:glide-transformations:${rootProject.ext.glide_transformation}"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${rootProject.ext.retrofit}"
+    implementation "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofit}"
+    implementation "com.google.code.gson:gson:${rootProject.ext.gson}"
+    implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofit}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${rootProject.ext.interceptor}"
+
+    //Anko
+    implementation "org.jetbrains.anko:anko:${rootProject.ext.anko}"
+    implementation "org.jetbrains.anko:anko-commons:${rootProject.ext.anko}"
+
+    //Dimen for multiple devices/tabs support
+    implementation "com.intuit.sdp:sdp-android:${rootProject.ext.dimen}"
+    implementation "com.intuit.ssp:ssp-android:${rootProject.ext.dimen}"
+
+    // Import the BoM for the Firebase platform
+    implementation platform("com.google.firebase:firebase-bom:$rootProject.ext.firebase_bom")
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation "com.google.firebase:firebase-config-ktx:$rootProject.ext.firebase_config_version"
+
+    /*Timber for logging*/
+    implementation "com.jakewharton.timber:timber:$rootProject.ext.timber"
+
+    //APIs for SplashScreen, including compatibility helpers on devices prior Android 12
+    implementation "androidx.core:core-splashscreen:$rootProject.ext.splash"
+
+    //paging
+    implementation "androidx.paging:paging-runtime-ktx:$rootProject.ext.paging"
+}

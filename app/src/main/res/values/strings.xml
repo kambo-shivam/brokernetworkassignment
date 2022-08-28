@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Broker Network</string>
+    <string name="no_network_available">The internet connection appears to be offline.</string>
+</resources>
