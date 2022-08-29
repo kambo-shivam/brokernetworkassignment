@@ -1,0 +1,72 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.4"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.40"
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext{
+    //google material
+    material                    = '1.4.0'
+    //Coroutines
+    coroutines                  = '1.5.0'
+    //kotlin
+    kotlin_stdlib               = '1.5.21'
+    //hilt
+    hilt                        = '2.40'
+    hilt_kapt                   = '2.37'
+    hilt_viewmodel              = '1.0.0-alpha03'
+    hilt_compiler               = '1.0.0'
+    //core
+    core                        = '1.7.0'
+    //appcompat
+    appcompat                   = '1.4.0'
+    //constraint layout
+    constraint_layout           = '2.1.2'
+    //navigation
+    navigation                  = '2.3.5'
+    //recycler view
+    recycler_view               = '1.2.1'
+    //preference
+    preference                  = '1.1.1'
+    //lifecycle
+    lifecycle                   = '2.4.0'
+    lifecycle_ext               = '2.2.0'
+    lifecycle_common            = '1.1.1'
+    //test
+    junit                       = '4.13.2'
+    junit_ext                   = '1.1.3'
+    expresso                    = '3.4.0'
+    //glide
+    glide                       = '4.11.0'
+    glide_transformation        = '4.3.0'
+    //retrofit
+    retrofit                    = '2.9.0'
+    gson                        = '2.8.9'
+    interceptor                 = '4.9.0'
+    //anko
+    anko                        = '0.10.5'
+    //dimen
+    dimen                       = '1.0.6'
+    //timber
+    timber                      = '4.7.1'
+    //firebase
+    firebase_bom                = '28.4.0'
+    firebase_config_version     = '20.0.1'
+    //splash
+    splash                      = '1.0.0-alpha02'
+    //paging
+    paging                      = '3.1.0'
+}
