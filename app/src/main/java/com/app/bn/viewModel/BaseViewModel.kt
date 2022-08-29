@@ -1,4 +1,4 @@
-package com.example.hiltdemo.viewModel
+package com.app.bn.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

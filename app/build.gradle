@@ -26,6 +26,10 @@ android {
         }
     }
 
+    dataBinding{
+        enabled=true
+    }
+
     /**
      * flavors setup
      * */
@@ -70,6 +74,7 @@ dependencies {
     //google material
     implementation "com.google.android.material:material:${rootProject.ext.material}"
 
+
     //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.ext.kotlin_stdlib}"
 
@@ -87,9 +92,6 @@ dependencies {
     implementation "androidx.appcompat:appcompat:${rootProject.ext.appcompat}"
     implementation "androidx.constraintlayout:constraintlayout:${rootProject.ext.constraint_layout}"
     implementation "androidx.navigation:navigation-fragment-ktx:${rootProject.ext.navigation}"
-
-    //recycler view
-    implementation "androidx.recyclerview:recyclerview:${rootProject.ext.recycler_view}"
 
     //preference support for Android Q
     implementation "androidx.preference:preference-ktx:${rootProject.ext.preference}"
@@ -121,24 +123,12 @@ dependencies {
     //Anko
     implementation "org.jetbrains.anko:anko:${rootProject.ext.anko}"
     implementation "org.jetbrains.anko:anko-commons:${rootProject.ext.anko}"
-
-    //Dimen for multiple devices/tabs support
-    implementation "com.intuit.sdp:sdp-android:${rootProject.ext.dimen}"
-    implementation "com.intuit.ssp:ssp-android:${rootProject.ext.dimen}"
-
-    // Import the BoM for the Firebase platform
-    implementation platform("com.google.firebase:firebase-bom:$rootProject.ext.firebase_bom")
-    implementation 'com.google.firebase:firebase-messaging-ktx'
-    implementation 'com.google.firebase:firebase-crashlytics'
-    implementation 'com.google.firebase:firebase-analytics'
-    implementation "com.google.firebase:firebase-config-ktx:$rootProject.ext.firebase_config_version"
-
     /*Timber for logging*/
     implementation "com.jakewharton.timber:timber:$rootProject.ext.timber"
 
     //APIs for SplashScreen, including compatibility helpers on devices prior Android 12
     implementation "androidx.core:core-splashscreen:$rootProject.ext.splash"
 
-    //paging
-    implementation "androidx.paging:paging-runtime-ktx:$rootProject.ext.paging"
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:3.0.3'
+
 }

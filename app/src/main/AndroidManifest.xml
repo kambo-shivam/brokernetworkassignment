@@ -3,27 +3,28 @@
     package="com.app.bn">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:name=".BnApp"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.AppSplash">
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.HiltDemo"
+        android:usesCleartextTraffic="true"
+        android:dataExtractionRules="@xml/data_extraction_rules">
         <activity
-            android:name=".view.demo.MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
-
-        </activity>
-
-        <activity
-            android:name=".view.PagingDemoActivity"
-            android:exported="true"
-            android:theme="@style/Theme.HiltDemo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
     </application>

@@ -1,4 +1,4 @@
-package com.app.bn.view.demo
+package com.app.bn.view
 
 import android.animation.ObjectAnimator
 import androidx.appcompat.app.AppCompatActivity
@@ -11,14 +11,15 @@ import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.splashscreen.SplashScreenViewProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.bn.R
-import com.app.bn.data.remote.User
+import com.app.bn.adapter.ResaleClientAdapter
+import com.app.bn.data.remote.BnResponse
+import com.app.bn.data.remote.Card
 import com.app.bn.utils.withNetwork
-import com.app.bn.view.PagingDemoActivity
 import com.app.bn.viewModel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 @AndroidEntryPoint
@@ -28,11 +29,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val splashScreen = installSplashScreen() // splash support for pre android 12 devices
+        installSplashScreen() // splash support for pre android 12 devices
         setSplashScreenDuration()
         setContentView(R.layout.activity_main)
-        // setSplashExitAnimation(splashScreen) // set splash anim
-        tvPaging.setOnClickListener { startActivity<PagingDemoActivity>() }
+
     }
 
     /**
@@ -46,7 +46,9 @@ class MainActivity : AppCompatActivity() {
                     return if (viewModel.isDataReady()) {
                         content.viewTreeObserver.removeOnPreDrawListener(this)
                         setObserver()
-                        callApiGetUsers()
+                        tv.text = "List"
+                        tv.textSize = 24f
+                        callApiGetListData()
                         true
                     } else {
                         false
@@ -56,56 +58,39 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    /**
-     * add animation to splash
-     * */
-    private fun setSplashExitAnimation(splashScreen: SplashScreen) {
-        splashScreen.setOnExitAnimationListener { splashScreenView ->
-            configureObjectAnimator(splashScreenView) { slideUpAnimation ->
-                with(slideUpAnimation) {
-                    interpolator = AnticipateInterpolator()
-                    duration = 3000L
-                    doOnEnd {
-                        splashScreenView.remove()
-                    }
-                    start()
-                }
-            }
-        }
-    }
-
-    private fun configureObjectAnimator(
-        splashScreenView: SplashScreenViewProvider,
-        onComplete: (ObjectAnimator) -> Unit
-    ) {
-        val objectAnimator = ObjectAnimator.ofFloat(
-            splashScreenView.view,
-            View.TRANSLATION_X,
-            0f,
-            -splashScreenView.view.height.toFloat()
-        )
-        onComplete.invoke(objectAnimator)
-    }
 
     /**
      * api call to fetch users list
      * */
-    private fun callApiGetUsers() {
+    private fun callApiGetListData() {
         withNetwork(true) {
-            viewModel.getUser(1)
+            viewModel.getClientData()
         }
     }
 
+    private fun showProgressBar() {
+        progress_bar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        progress_bar.visibility = View.GONE
+    }
+
     private fun setObserver() {
-        viewModel.showError.observe(this, {
+        viewModel.showError.observe(this) {
+            hideProgressBar()
             toast(it)
-        })
-        viewModel.responseResult.observe(this, {
-            if (it is User)
-                toast("Api response :: User found ${it.name}")
-        })
-        viewModel.showLoading.observe(this, {
-            // show hide progress bar using boolean flag
-        })
+        }
+        viewModel.responseResult.observe(this) {
+            hideProgressBar()
+            if (it is BnResponse) {
+                val data = it.cards;
+                rv.layoutManager = LinearLayoutManager(this)
+                rv.adapter = ResaleClientAdapter(this, data as ArrayList<Card>?)
+            }
+        }
+        viewModel.showLoading.observe(this) {
+            showProgressBar()
+        }
     }
 }

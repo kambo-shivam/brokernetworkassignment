@@ -4,34 +4,13 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
-@Parcelize
-data class User(
-    val id: Int,
-    val name: String,
-    val species: String,
-    val type: String,
-    val image: String,
-    val url: String,
-) : Parcelable
-
-data class PagedResponse<T>(
-    @SerializedName("info") val pageInfo: PageInfo,
-    val results: List<T> = listOf()
-)
-
-data class PageInfo(
-    val count: Int,
-    val pages: Int,
-    val next: String?,
-    val prev: String?
-)
 
 data class BnResponse(
     var cards: List<Card>?
 )
 
 data class Card(
-    var `data`: Data?
+    var data: Data?
 )
 
 data class Data(
